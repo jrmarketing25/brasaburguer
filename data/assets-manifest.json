@@ -1,0 +1,90 @@
+[
+  {
+    "path": "/images/products/brasa-classico.webp",
+    "source": "brasa_clássico_burger_gourmet_ao_fogo.png",
+    "size": [
+      1254,
+      1080
+    ]
+  },
+  {
+    "path": "/images/products/brasa-bacon.webp",
+    "source": "hambúrguer_brasa_bacon_em_fogo.png",
+    "size": [
+      1254,
+      1080
+    ]
+  },
+  {
+    "path": "/images/products/brasa-bbq.webp",
+    "source": "hambúrguer_brasa_bbq_gourmet.png",
+    "size": [
+      1254,
+      1080
+    ]
+  },
+  {
+    "path": "/images/combos/combo-classico.webp",
+    "source": "combo_brasa_clássico_em_chamas.png",
+    "size": [
+      1254,
+      1080
+    ]
+  },
+  {
+    "path": "/images/combos/combo-bacon.webp",
+    "source": "combo_brasa_bacon_em_chamas.png",
+    "size": [
+      1254,
+      1080
+    ]
+  },
+  {
+    "path": "/images/hero/hero-campanha-com-texto.webp",
+    "source": "hambúrguer_artesanal_em_chamas.png",
+    "size": [
+      1672,
+      941
+    ]
+  },
+  {
+    "path": "/images/hero/hero-burger-recorte.webp",
+    "source": "hambúrguer_artesanal_em_chamas.png",
+    "size": [
+      792,
+      870
+    ]
+  },
+  {
+    "path": "/images/references/mockup-desktop.webp",
+    "source": "brasa_burgers_sabor_em_chamas.png",
+    "size": [
+      1586,
+      992
+    ]
+  },
+  {
+    "path": "/images/references/mockup-mobile.webp",
+    "source": "brasa_burgers_sabor_que_une_pessoas.png",
+    "size": [
+      941,
+      1672
+    ]
+  },
+  {
+    "path": "/images/references/brandboard.webp",
+    "source": "identidade_brasa_burgers_sabor_que_une_pessoas.png",
+    "size": [
+      1448,
+      1086
+    ]
+  },
+  {
+    "path": "/images/references/mockup-fluxo-alternativo.webp",
+    "source": "a_wide_polished_promotional_mockup_layout_for_a.png",
+    "size": [
+      1536,
+      1024
+    ]
+  }
+]

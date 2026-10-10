@@ -1,0 +1,314 @@
+{
+  "store": {
+    "name": "Brasa Burgers",
+    "slogan": "Sabor que une pessoas.",
+    "currency": "BRL",
+    "locale": "pt-BR",
+    "whatsapp": "5511999999999",
+    "deliveryFeeCents": 690,
+    "minimumOrderCents": 0,
+    "isOpen": true
+  },
+  "categories": [
+    {
+      "slug": "hamburgueres",
+      "name": "Hambúrgueres",
+      "sort": 1
+    },
+    {
+      "slug": "combos",
+      "name": "Combos",
+      "sort": 2
+    },
+    {
+      "slug": "acompanhamentos",
+      "name": "Acompanhamentos",
+      "sort": 3
+    },
+    {
+      "slug": "bebidas",
+      "name": "Bebidas",
+      "sort": 4
+    }
+  ],
+  "products": [
+    {
+      "slug": "brasa-classico",
+      "name": "Brasa Clássico",
+      "category": "hamburgueres",
+      "priceCents": 3290,
+      "image": "/images/products/brasa-classico.webp",
+      "description": "Blend artesanal na brasa, queijo cheddar derretido, alface fresca, tomate e molho especial da casa.",
+      "badge": "Clássico",
+      "ingredients": [
+        "Blend artesanal 180g",
+        "Queijo cheddar derretido",
+        "Alface americana",
+        "Tomate fresco",
+        "Molho especial da casa"
+      ],
+      "customizationGroups": [
+        {
+          "id": "adicionais",
+          "name": "Adicione mais sabor",
+          "description": "Escolha até 4 adicionais especiais",
+          "min": 0,
+          "max": 4,
+          "required": false,
+          "type": "addition",
+          "options": [
+            { "id": "bacon-extra", "name": "Bacon extra", "priceCents": 400 },
+            { "id": "cheddar-extra", "name": "Cheddar extra", "priceCents": 300 },
+            { "id": "carne-extra", "name": "Carne extra (blend 180g)", "priceCents": 900 },
+            { "id": "molho-especial", "name": "Molho especial da casa", "priceCents": 200 }
+          ]
+        },
+        {
+          "id": "retirar",
+          "name": "Retirar ingredientes",
+          "description": "Selecione o que deseja remover do lanche",
+          "min": 0,
+          "max": 4,
+          "required": false,
+          "type": "removal",
+          "options": [
+            { "id": "sem-alface", "name": "Sem alface", "priceCents": 0 },
+            { "id": "sem-tomate", "name": "Sem tomate", "priceCents": 0 },
+            { "id": "sem-molho", "name": "Sem molho", "priceCents": 0 },
+            { "id": "sem-queijo", "name": "Sem queijo cheddar", "priceCents": 0 }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "brasa-bacon",
+      "name": "Brasa Bacon",
+      "category": "hamburgueres",
+      "priceCents": 3690,
+      "image": "/images/products/brasa-bacon.webp",
+      "description": "Blend artesanal, queijo cheddar duplo, tiras generosas de bacon crocante e cebola caramelizada.",
+      "badge": "Mais pedido",
+      "ingredients": [
+        "Blend artesanal 180g",
+        "Queijo cheddar fatiado",
+        "Bacon crocante em tiras",
+        "Cebola caramelizada",
+        "Molho especial da casa"
+      ],
+      "customizationGroups": [
+        {
+          "id": "adicionais",
+          "name": "Adicione mais sabor",
+          "description": "Escolha até 4 adicionais especiais",
+          "min": 0,
+          "max": 4,
+          "required": false,
+          "type": "addition",
+          "options": [
+            { "id": "bacon-extra", "name": "Bacon extra", "priceCents": 400 },
+            { "id": "cheddar-extra", "name": "Cheddar extra", "priceCents": 300 },
+            { "id": "carne-extra", "name": "Carne extra (blend 180g)", "priceCents": 900 },
+            { "id": "molho-especial", "name": "Molho especial da casa", "priceCents": 200 }
+          ]
+        },
+        {
+          "id": "retirar",
+          "name": "Retirar ingredientes",
+          "description": "Selecione o que deseja remover do lanche",
+          "min": 0,
+          "max": 3,
+          "required": false,
+          "type": "removal",
+          "options": [
+            { "id": "sem-cebola", "name": "Sem cebola caramelizada", "priceCents": 0 },
+            { "id": "sem-bacon", "name": "Sem bacon", "priceCents": 0 },
+            { "id": "sem-molho", "name": "Sem molho da casa", "priceCents": 0 }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "brasa-bbq",
+      "name": "Brasa BBQ",
+      "category": "hamburgueres",
+      "priceCents": 3490,
+      "image": "/images/products/brasa-bbq.webp",
+      "description": "Blend artesanal, queijo cheddar, bacon, crispy onion super crocante e barbecue defumado.",
+      "ingredients": [
+        "Blend artesanal 180g",
+        "Queijo cheddar",
+        "Bacon crocante",
+        "Crispy onion",
+        "Molho barbecue defumado"
+      ],
+      "customizationGroups": [
+        {
+          "id": "adicionais",
+          "name": "Adicione mais sabor",
+          "description": "Escolha até 4 adicionais especiais",
+          "min": 0,
+          "max": 4,
+          "required": false,
+          "type": "addition",
+          "options": [
+            { "id": "bacon-extra", "name": "Bacon extra", "priceCents": 400 },
+            { "id": "cheddar-extra", "name": "Cheddar extra", "priceCents": 300 },
+            { "id": "carne-extra", "name": "Carne extra (blend 180g)", "priceCents": 900 },
+            { "id": "molho-bbq-extra", "name": "Barbecue extra", "priceCents": 200 }
+          ]
+        },
+        {
+          "id": "retirar",
+          "name": "Retirar ingredientes",
+          "description": "Selecione o que deseja remover do lanche",
+          "min": 0,
+          "max": 3,
+          "required": false,
+          "type": "removal",
+          "options": [
+            { "id": "sem-crispy", "name": "Sem crispy onion", "priceCents": 0 },
+            { "id": "sem-bbq", "name": "Sem barbecue", "priceCents": 0 },
+            { "id": "sem-bacon", "name": "Sem bacon", "priceCents": 0 }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "combo-classico",
+      "name": "Combo Brasa Clássico",
+      "category": "combos",
+      "priceCents": 4990,
+      "image": "/images/combos/combo-classico.webp",
+      "description": "Brasa Clássico suculento, porção individual de batata rústica crocante e refrigerante gelado.",
+      "badge": "Mais pedido",
+      "ingredients": [
+        "1x Hambúrguer Brasa Clássico",
+        "1x Batata rústica individual",
+        "1x Bebida lata 350ml"
+      ],
+      "customizationGroups": [
+        {
+          "id": "bebida",
+          "name": "Escolha sua bebida",
+          "description": "Item obrigatório incluso no combo",
+          "min": 1,
+          "max": 1,
+          "required": true,
+          "type": "choice",
+          "options": [
+            { "id": "coca-cola", "name": "Coca-Cola Original 350ml", "priceCents": 0 },
+            { "id": "coca-zero", "name": "Coca-Cola Sem Açúcar 350ml", "priceCents": 0 },
+            { "id": "guarana", "name": "Guaraná Antarctica 350ml", "priceCents": 0 },
+            { "id": "agua", "name": "Água Mineral 500ml", "priceCents": 0 }
+          ]
+        },
+        {
+          "id": "adicionais",
+          "name": "Adicionais no burger do combo",
+          "description": "Turbine o hambúrguer do seu combo",
+          "min": 0,
+          "max": 3,
+          "required": false,
+          "type": "addition",
+          "options": [
+            { "id": "bacon-extra", "name": "Bacon extra", "priceCents": 400 },
+            { "id": "cheddar-extra", "name": "Cheddar extra", "priceCents": 300 },
+            { "id": "molho-especial", "name": "Molho especial extra", "priceCents": 200 }
+          ]
+        },
+        {
+          "id": "retirar",
+          "name": "Retirar ingredientes do burger",
+          "description": "Personalize o hambúrguer",
+          "min": 0,
+          "max": 3,
+          "required": false,
+          "type": "removal",
+          "options": [
+            { "id": "sem-alface", "name": "Sem alface", "priceCents": 0 },
+            { "id": "sem-tomate", "name": "Sem tomate", "priceCents": 0 },
+            { "id": "sem-molho", "name": "Sem molho", "priceCents": 0 }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "combo-bacon",
+      "name": "Combo Brasa Bacon",
+      "category": "combos",
+      "priceCents": 5390,
+      "image": "/images/combos/combo-bacon.webp",
+      "description": "Brasa Bacon no ponto perfeito, batata rústica dourada e refrigerante gelado.",
+      "ingredients": [
+        "1x Hambúrguer Brasa Bacon",
+        "1x Batata rústica individual",
+        "1x Bebida lata 350ml"
+      ],
+      "customizationGroups": [
+        {
+          "id": "bebida",
+          "name": "Escolha sua bebida",
+          "description": "Item obrigatório incluso no combo",
+          "min": 1,
+          "max": 1,
+          "required": true,
+          "type": "choice",
+          "options": [
+            { "id": "coca-cola", "name": "Coca-Cola Original 350ml", "priceCents": 0 },
+            { "id": "coca-zero", "name": "Coca-Cola Sem Açúcar 350ml", "priceCents": 0 },
+            { "id": "guarana", "name": "Guaraná Antarctica 350ml", "priceCents": 0 },
+            { "id": "agua", "name": "Água Mineral 500ml", "priceCents": 0 }
+          ]
+        },
+        {
+          "id": "adicionais",
+          "name": "Adicionais no burger do combo",
+          "description": "Turbine o hambúrguer do seu combo",
+          "min": 0,
+          "max": 3,
+          "required": false,
+          "type": "addition",
+          "options": [
+            { "id": "bacon-extra", "name": "Bacon extra", "priceCents": 400 },
+            { "id": "cheddar-extra", "name": "Cheddar extra", "priceCents": 300 },
+            { "id": "molho-especial", "name": "Molho especial extra", "priceCents": 200 }
+          ]
+        },
+        {
+          "id": "retirar",
+          "name": "Retirar ingredientes do burger",
+          "description": "Personalize o hambúrguer",
+          "min": 0,
+          "max": 2,
+          "required": false,
+          "type": "removal",
+          "options": [
+            { "id": "sem-cebola", "name": "Sem cebola caramelizada", "priceCents": 0 },
+            { "id": "sem-molho", "name": "Sem molho da casa", "priceCents": 0 }
+          ]
+        }
+      ]
+    }
+  ],
+  "addOnGroups": [
+    {
+      "name": "Adicionais",
+      "min": 0,
+      "max": 4,
+      "items": [
+        {
+          "name": "Bacon extra",
+          "priceCents": 400
+        },
+        {
+          "name": "Cheddar extra",
+          "priceCents": 300
+        },
+        {
+          "name": "Molho da casa",
+          "priceCents": 200
+        }
+      ]
+    }
+  ]
+}

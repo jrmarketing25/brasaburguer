@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 3%; /* #080808 */
+    --foreground: 38 59% 87%; /* #F3E3C7 */
+
+    --card: 0 0% 11%; /* #1C1C1C */
+    --card-foreground: 38 59% 87%;
+
+    --popover: 0 0% 11%;
+    --popover-foreground: 38 59% 87%;
+
+    --primary: 25 100% 50%; /* #FF6A00 */
+    --primary-foreground: 0 0% 3%;
+
+    --secondary: 8 80% 51%; /* #E6391F */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 38 20% 70%;
+
+    --accent: 0 0% 16%;
+    --accent-foreground: 38 59% 87%;
+
+    --destructive: 8 80% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 16.5%; /* #2A2A2A */
+    --input: 0 0% 16.5%;
+    --ring: 25 100% 50%;
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    background-color: #080808;
+    color: #F3E3C7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+
+  body {
+    background-color: #080808;
+    color: #F3E3C7;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+  }
+}
+
+/* Utilitários tipográficos, safe-area e de scrollbar */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Oculta scrollbar mantendo rolagem nativa */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Suporte a safe area em dispositivos móveis */
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
