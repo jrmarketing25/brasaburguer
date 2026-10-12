@@ -12,58 +12,63 @@ async function capture() {
     state: {
       items: [
         {
-          cartItemId: 'combo-classico__opt[bebida:coca-cola:0]__rem[]__obs[]',
+          cartItemId: 'brasa-classico-1',
           product: {
-            slug: 'combo-classico',
-            name: 'Combo Brasa Clássico',
-            category: 'combos',
-            priceCents: 4990,
-            image: '/images/combos/combo-classico.webp',
-            description: 'Brasa Clássico, batata rústica e refrigerante gelado.',
+            slug: 'brasa-classico',
+            name: 'Brasa Clássico',
+            category: 'hamburgueres',
+            priceCents: 3490,
+            image: '/images/products/brasa-classico.webp',
+            description: 'Blend 180g, queijo cheddar, bacon crocante, alface e molho especial.',
             badge: 'Mais pedido'
           },
           quantity: 1,
-          selectedAddOns: [{ name: 'Coca-Cola Original 350ml', priceCents: 0, quantity: 1 }],
-          selectedOptions: [{ groupId: 'bebida', groupName: 'Escolha sua bebida', optionId: 'coca-cola', name: 'Coca-Cola Original 350ml', priceCents: 0 }],
+          selectedAddOns: [],
+          selectedOptions: [],
           removedIngredients: [],
-          observation: 'Gelo e limão, por favor',
-          unitPriceCents: 4990,
-          totalItemCents: 4990
+          observation: '',
+          unitPriceCents: 3490,
+          totalItemCents: 3490
         },
         {
-          cartItemId: 'brasa-bacon__addons[bacon-extra:400:1]__rem[cebola]__obs[ponto]',
+          cartItemId: 'batata-rustica-1',
           product: {
             slug: 'brasa-bacon',
-            name: 'Brasa Bacon',
-            category: 'hamburgueres',
-            priceCents: 4090,
-            image: '/images/burgers/brasa-bacon.webp',
-            description: 'Blend 180g, muito bacon crocante, cheddar duplo e molho especial.',
-            badge: 'Mais pedido'
+            name: 'Batata Rústica',
+            category: 'acompanhamentos',
+            priceCents: 1590,
+            image: '/images/products/brasa-bacon.webp',
+            description: 'Batatas rústicas douradas com alecrim e páprica defumada.',
+            badge: ''
           },
-          quantity: 2,
-          selectedAddOns: [{ name: 'Bacon extra', priceCents: 400, quantity: 1 }],
+          quantity: 1,
+          selectedAddOns: [],
           selectedOptions: [],
-          removedIngredients: ['Cebola caramelizada'],
-          observation: 'Ponto bem passado',
-          unitPriceCents: 4490,
-          totalItemCents: 8980
+          removedIngredients: [],
+          observation: '',
+          unitPriceCents: 1590,
+          totalItemCents: 1590
+        },
+        {
+          cartItemId: 'coca-cola-1',
+          product: {
+            slug: 'combo-classico',
+            name: 'Coca-Cola Lata',
+            category: 'bebidas',
+            priceCents: 690,
+            image: '/images/combos/combo-classico.webp',
+            description: 'Refrigerante Coca-Cola 350ml gelada.',
+            badge: ''
+          },
+          quantity: 1,
+          selectedAddOns: [],
+          selectedOptions: [],
+          removedIngredients: [],
+          observation: '',
+          unitPriceCents: 690,
+          totalItemCents: 690
         }
-      ],
-      deliveryMode: 'delivery',
-      customer: {
-        name: 'João Silva',
-        phone: '11987654321',
-        cep: '01310-100',
-        street: 'Avenida Paulista',
-        number: '1000',
-        complement: 'Apto 42',
-        neighborhood: 'Bela Vista',
-        city: 'São Paulo',
-        reference: ''
-      },
-      paymentMethod: 'pix',
-      changeFor: null
+      ]
     },
     version: 0
   };
@@ -71,7 +76,7 @@ async function capture() {
   const viewports = [
     { name: '1024px', width: 1024, height: 800 },
     { name: '1280px', width: 1280, height: 900 },
-    { name: '1440px', width: 1440, height: 950 },
+    { name: '1440px', width: 1440, height: 1080 },
     { name: '1600px', width: 1600, height: 1000 },
     { name: '390px-mobile', width: 390, height: 844 },
   ];
@@ -85,7 +90,7 @@ async function capture() {
 
     // Injeta dados de demonstração no carrinho via localStorage
     await page.evaluate((data) => {
-      localStorage.setItem('brasa_burgers_cart_v1', JSON.stringify(data));
+      localStorage.setItem('brasa-burgers-cart-v1', JSON.stringify(data));
     }, cartDemoData);
 
     await page.reload({ waitUntil: 'networkidle2' });

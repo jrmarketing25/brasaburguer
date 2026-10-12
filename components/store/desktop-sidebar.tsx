@@ -3,16 +3,15 @@
 import React from "react";
 import Image from "next/image";
 import { Category } from "@/types/store";
-import { defaultStoreConfig } from "@/lib/config/store.config";
 import {
-  Flame,
-  Layers,
-  UtensilsCrossed,
-  Sparkles,
-  CupSoda,
-  Cookie,
-  Beef,
-} from "lucide-react";
+  BurgerMenuIcon,
+  ComboMenuIcon,
+  FriesMenuIcon,
+  DrinkMenuIcon,
+  SauceMenuIcon,
+  DessertMenuIcon,
+} from "@/components/store/menu-icons";
+import { Flame } from "lucide-react";
 
 interface DesktopSidebarProps {
   categories: Category[];
@@ -25,40 +24,50 @@ export function DesktopSidebar({
   selectedCategory,
   onSelectCategory,
 }: DesktopSidebarProps) {
-  // Mapeia ícones apropriados por slug de categoria
+  // Mapeia ícones fiéis ao mockup por slug de categoria
   const getCategoryIcon = (slug: string) => {
     switch (slug) {
       case "all":
-        return <UtensilsCrossed className="h-4 w-4" />;
+        return <BurgerMenuIcon className="h-4 w-4" />;
       case "hamburgueres":
-        return <Beef className="h-4 w-4" />;
+        return <BurgerMenuIcon className="h-4 w-4" />;
       case "combos":
-        return <Layers className="h-4 w-4" />;
+        return <ComboMenuIcon className="h-4 w-4" />;
       case "acompanhamentos":
-        return <Sparkles className="h-4 w-4" />;
+        return <FriesMenuIcon className="h-4 w-4" />;
       case "bebidas":
-        return <CupSoda className="h-4 w-4" />;
+        return <DrinkMenuIcon className="h-4 w-4" />;
+      case "molhos":
+        return <SauceMenuIcon className="h-4 w-4" />;
       case "sobremesas":
-        return <Cookie className="h-4 w-4" />;
+        return <DessertMenuIcon className="h-4 w-4" />;
       default:
         return <Flame className="h-4 w-4" />;
     }
   };
 
-  // Garante a opção "Todos os Produtos" na lista
-  const allCategories = [
+  // Garante a lista completa com os nomes fiéis ao mockup
+  const baseCategories = [
     { slug: "all", name: "Todos os Produtos", sort: 0 },
-    ...categories,
+    ...categories.map((c) => ({
+      ...c,
+      name: c.slug === "hamburgueres" ? "Burgers Artesanais" : c.name,
+    })),
+  ];
+
+  // Adiciona Molhos Extras e Sobremesas se não estiverem presentes nos dados demo
+  const hasMolhos = baseCategories.some((c) => c.slug === "molhos");
+  const hasSobremesas = baseCategories.some((c) => c.slug === "sobremesas");
+  const allCategories = [
+    ...baseCategories,
+    ...(!hasMolhos ? [{ slug: "molhos", name: "Molhos Extras", sort: 5 }] : []),
+    ...(!hasSobremesas ? [{ slug: "sobremesas", name: "Sobremesas", sort: 6 }] : []),
   ];
 
   return (
     <aside className="w-56 xl:w-64 shrink-0 space-y-6 self-start sticky top-20">
       {/* 1. Lista de Categorias de Navegação */}
-      <div className="rounded-2xl border border-brasa-border bg-brasa-surface/80 p-3 space-y-1.5 shadow-card backdrop-blur-sm">
-        <p className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-zinc-500">
-          Categorias
-        </p>
-
+      <div className="rounded-2xl border border-brasa-border bg-brasa-surface/90 p-2.5 space-y-1 shadow-card backdrop-blur-sm">
         <nav className="space-y-1" aria-label="Categorias do cardápio">
           {allCategories.map((cat) => {
             const isActive = selectedCategory === cat.slug;
@@ -73,17 +82,17 @@ export function DesktopSidebar({
                     menuEl.scrollIntoView({ behavior: "smooth", block: "start" });
                   }
                 }}
-                className={`group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold transition-all active:scale-[0.98] ${
+                className={`group flex w-full items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold transition-all active:scale-[0.98] ${
                   isActive
-                    ? "bg-gradient-to-r from-brasa-orange/20 to-brasa-orange/5 text-brasa-orange border border-brasa-orange/40 font-bold shadow-sm"
-                    : "text-zinc-400 hover:text-brasa-cream hover:bg-zinc-800/60 border border-transparent"
+                    ? "bg-gradient-to-r from-brasa-orange/20 to-brasa-orange/5 text-brasa-cream border border-brasa-orange/60 font-bold shadow-sm"
+                    : "text-zinc-400 hover:text-brasa-cream hover:bg-zinc-800/50 border border-transparent"
                 }`}
               >
                 <div
                   className={`flex h-7 w-7 items-center justify-center rounded-lg transition-colors shrink-0 ${
                     isActive
                       ? "bg-brasa-orange text-black shadow-sm"
-                      : "bg-zinc-800/80 text-zinc-400 group-hover:text-brasa-cream group-hover:bg-zinc-700/80"
+                      : "text-zinc-400 group-hover:text-brasa-cream"
                   }`}
                 >
                   {getCategoryIcon(cat.slug)}

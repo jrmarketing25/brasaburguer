@@ -29,26 +29,28 @@ export function HomeCatalog({ menuData }: HomeCatalogProps) {
         </div>
 
         {/* ========================================================= */}
-        {/* 2. ÁREA CENTRAL: Hero, Busca, Combos e Grid de Produtos   */}
+        {/* 2. ÁREA PRINCIPAL: Hero no topo + Catálogo & Carrinho    */}
         {/* ========================================================= */}
-        <main className="flex-1 min-w-0 space-y-4 sm:space-y-6">
-          {/* Hero Gastronômico (Adaptativo: Mobile compacto vs Desktop horizontal) */}
+        <div className="flex-1 min-w-0 space-y-4 sm:space-y-6">
+          {/* Hero Gastronômico (Ampla largura no Desktop, acima do catálogo e do carrinho) */}
           <HeroBanner />
 
-          {/* Catálogo com Busca, Categorias e Grid Responsivo */}
-          <ProductList
-            categories={menuData.categories}
-            products={menuData.products}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
-        </main>
+          {/* Linha de Conteúdo: Catálogo à esquerda e Carrinho Lateral à direita */}
+          <div className="flex gap-6 lg:gap-7 xl:gap-8 items-start">
+            <main className="flex-1 min-w-0">
+              <ProductList
+                categories={menuData.categories}
+                products={menuData.products}
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+              />
+            </main>
 
-        {/* ========================================================= */}
-        {/* 3. SIDEBAR DIREITA: Carrinho Lateral (hidden xl:block)     */}
-        {/* ========================================================= */}
-        <div className="hidden xl:block">
-          <DesktopCartSidebar />
+            {/* 3. SIDEBAR DIREITA: Carrinho Lateral alinhado abaixo do Hero (Mockup Exato) */}
+            <div className="hidden xl:block shrink-0">
+              <DesktopCartSidebar />
+            </div>
+          </div>
         </div>
       </div>
     </div>
