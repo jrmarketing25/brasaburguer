@@ -125,24 +125,31 @@ export function ProductList({
         )}
 
         {/* Seção Principal de Produtos */}
-        <div className="space-y-3.5 pt-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Flame className="h-4 w-4 text-brasa-orange" />
-              <h2 className="font-bebas text-xl sm:text-2xl lg:text-3xl tracking-wide uppercase text-brasa-cream leading-tight">
-                {searchQuery
-                  ? `Resultados para "${searchQuery}"`
-                  : currentCategory === "all"
-                  ? "Nossos Burgers & Especiais"
-                  : currentCategory === "combos"
-                  ? "Combos Especiais"
-                  : currentCategory === "hamburgueres"
-                  ? "Nossos burgers"
-                  : categories.find((c) => c.slug === currentCategory)?.name || "Produtos"}
-              </h2>
+        <div className="space-y-4 pt-2">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 border-b border-brasa-border/40 pb-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Flame className="h-4 w-4 text-brasa-orange" />
+                <h2 className="font-bebas text-xl sm:text-2xl lg:text-3xl tracking-wide uppercase text-brasa-cream leading-tight">
+                  {searchQuery
+                    ? `Resultados para "${searchQuery}"`
+                    : currentCategory === "all"
+                    ? "Nossos Burgers & Especiais"
+                    : currentCategory === "combos"
+                    ? "Combos Especiais"
+                    : currentCategory === "hamburgueres"
+                    ? "Nossos Burgers"
+                    : categories.find((c) => c.slug === currentCategory)?.name || "Produtos"}
+                </h2>
+              </div>
+              {!searchQuery && (currentCategory === "all" || currentCategory === "hamburgueres") && (
+                <p className="text-xs text-zinc-400 font-medium">
+                  Ingredientes selecionados. Sabor incomparável. Feitos para unir pessoas.
+                </p>
+              )}
             </div>
 
-            <span className="text-xs font-mono text-zinc-500">
+            <span className="text-xs font-mono text-zinc-500 shrink-0">
               {filteredProducts.length} {filteredProducts.length === 1 ? "produto" : "produtos"}
             </span>
           </div>

@@ -207,12 +207,12 @@ export function DesktopCartSidebar() {
           href="/carrinho"
           className={`flex items-center justify-center gap-2 w-full h-11 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 ${
             items.length > 0
-              ? "bg-emerald-500 hover:bg-emerald-600 text-black"
+              ? "bg-emerald-500 hover:bg-emerald-600 text-black shadow-glow"
               : "bg-zinc-800 text-zinc-500 pointer-events-none"
           }`}
         >
           <MessageSquare className="h-4 w-4 fill-current shrink-0" />
-          <span>Finalizar Pedido</span>
+          <span>Finalizar pelo WhatsApp</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
 

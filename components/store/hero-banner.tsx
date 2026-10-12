@@ -93,19 +93,32 @@ export function HeroBanner() {
       </div>
 
       {/* ========================================================= */}
-      {/* 2. HERO DESKTOP (lg:flex) — Reprodução Fiel do Mockup    */}
+      {/* 2. HERO DESKTOP (lg:flex) — Reprodução Fiel com Image A    */}
       {/* ========================================================= */}
-      <div className="hidden lg:flex relative w-full rounded-3xl border border-brasa-border bg-gradient-to-r from-black via-brasa-surface to-black p-8 xl:p-10 overflow-hidden shadow-2xl items-center justify-between min-h-[300px] xl:min-h-[340px]">
-        {/* Efeito sutil de calor e brasa ao fundo */}
+      <div className="hidden lg:flex relative w-full rounded-3xl border border-brasa-border bg-black overflow-hidden shadow-2xl items-center min-h-[300px] xl:min-h-[330px] 2xl:min-h-[350px]">
+        {/* Imagem de Fundo Oficial (Image A): Burger na brasa + tipografia manuscrita na direita */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/desktop/hero-desktop-bg.webp"
+            alt="Burgers artesanais preparados na brasa viva"
+            fill
+            priority
+            sizes="(max-width: 1440px) 960px, 1200px"
+            className="object-cover object-right select-none pointer-events-none"
+          />
+        </div>
+
+        {/* Gradiente escuro no lado esquerdo para garantir legibilidade perfeita do overlay em HTML */}
         <div
-          className="pointer-events-none absolute right-1/4 top-1/2 -translate-y-1/2 w-96 h-96 bg-brasa-orange/15 blur-[90px] rounded-full"
+          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-black/95 via-black/75 to-transparent w-full md:w-[65%] lg:w-[60%] xl:w-[55%]"
           aria-hidden="true"
         />
 
-        {/* Coluna Esquerda: Marca, Mensagem e CTA */}
-        <div className="relative z-10 max-w-md xl:max-w-lg space-y-4 text-left">
+        {/* Coluna Esquerda: Overlay em HTML (Logo, Badge, Título, Subtítulo e CTA) */}
+        <div className="relative z-20 max-w-sm xl:max-w-md 2xl:max-w-lg p-7 xl:p-9 space-y-3.5 text-left">
+          {/* Logo Pequena e Tag/Badge */}
           <div className="flex items-center gap-3">
-            <div className="relative h-10 w-28 xl:h-12 xl:w-36">
+            <div className="relative h-8 w-24 xl:h-9 xl:w-28">
               <Image
                 src={defaultStoreConfig.logoUrl}
                 alt={defaultStoreConfig.name}
@@ -114,29 +127,29 @@ export function HeroBanner() {
                 className="object-contain object-left"
               />
             </div>
-            <span className="rounded-full border border-brasa-orange/40 bg-brasa-orange/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brasa-orange">
+            <span className="rounded-full border border-brasa-orange/40 bg-brasa-orange/15 px-3 py-0.5 text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-brasa-orange shadow-sm">
               Artesanal na brasa
             </span>
           </div>
 
-          <div className="space-y-1.5">
-            <h1 className="font-bebas text-4xl xl:text-5xl 2xl:text-6xl tracking-wide uppercase leading-[0.95] text-brasa-cream">
-              Sabor que{" "}
-              <span className="text-brasa-orange">
-                une pessoas.
-              </span>
+          {/* Título Principal */}
+          <div className="space-y-1">
+            <h1 className="font-bebas text-4xl xl:text-5xl 2xl:text-6xl tracking-wide uppercase leading-[0.92] text-brasa-cream">
+              Sabor que <br />
+              <span className="text-brasa-orange">une pessoas.</span>
             </h1>
 
-            <p className="font-sans text-xs xl:text-sm font-medium uppercase tracking-wider text-zinc-400">
+            <p className="font-sans text-xs xl:text-sm font-medium uppercase tracking-wider text-zinc-300">
               Burgers artesanais para qualquer momento.
             </p>
           </div>
 
+          {/* Botão CTA Principal */}
           <div className="pt-2">
             <Button
               size="lg"
               onClick={handleScrollToMenu}
-              className="group h-12 px-7 text-sm font-bold bg-brasa-orange hover:bg-brasa-orangeHover text-black rounded-full shadow-lg transition-all active:scale-95"
+              className="group h-11 xl:h-12 px-6 xl:px-7 text-xs xl:text-sm font-bold uppercase tracking-wider bg-brasa-orange hover:bg-brasa-orangeHover text-black rounded-full shadow-lg transition-all active:scale-95"
             >
               <span>Faça seu pedido agora</span>
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -144,28 +157,8 @@ export function HeroBanner() {
           </div>
         </div>
 
-        {/* Coluna Direita: Fotografia do Hambúrguer & Elementos Tipográficos */}
-        <div className="relative z-10 flex items-center justify-end flex-1 pl-6">
-          {/* Tipografia Artística Lateral (Conforme Mockup) */}
-          <div className="hidden xl:flex flex-col text-right font-bebas text-lg tracking-wider text-zinc-600/70 select-none mr-4 leading-none space-y-1">
-            <span>CARNE</span>
-            <span>FOGO</span>
-            <span>PESSOAS</span>
-            <span className="text-zinc-500">BONS MOMENTOS</span>
-          </div>
-
-          {/* Fotografia em Destaque Gastronômico */}
-          <div className="relative w-64 xl:w-80 2xl:w-96 aspect-square drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)] transition-transform duration-500 hover:scale-105">
-            <Image
-              src="/images/hero/hero-burger-recorte.webp"
-              alt="Hambúrguer artesanal na brasa viva"
-              fill
-              priority
-              sizes="(max-width: 1280px) 320px, 384px"
-              className="object-contain"
-            />
-          </div>
-        </div>
+        {/* Lado Direito: A própria imagem de fundo já destaca o hambúrguer suculento e a tipografia
+            manuscrita "CARNE / FOGO / PESSOAS / BONS MOMENTOS", preservando a composição sem sobreposição */}
       </div>
     </section>
   );
