@@ -4,3 +4,6 @@ export * from "./combo-carousel";
 export * from "./product-card";
 export * from "./product-list";
 export * from "./product-details-drawer";
+export * from "./desktop-sidebar";
+export * from "./desktop-cart-sidebar";
+export * from "./home-catalog";

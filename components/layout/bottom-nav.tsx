@@ -20,7 +20,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-brasa-border bg-brasa-surface/98 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.7)]"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-brasa-border bg-brasa-surface/98 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.7)]"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       aria-label="Navegação inferior mobile"
     >
