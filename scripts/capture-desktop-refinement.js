@@ -112,6 +112,17 @@ async function capture() {
       const outPath = path.join(__dirname, '..', 'public', 'images', 'references', 'home-desktop-refinement-1440px.png');
       await page.screenshot({ path: outPath, fullPage: false });
       console.log(`Captured 1440px screenshot: ${outPath}`);
+
+      // Scroll to product grid to verify 4-column layout
+      await page.evaluate(() => {
+        const el = document.querySelector('h2');
+        if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+      });
+      await new Promise(r => setTimeout(r, 600));
+
+      const outGrid = path.join(__dirname, '..', 'public', 'images', 'references', 'grid-4-colunas-1440px.png');
+      await page.screenshot({ path: outGrid, fullPage: false });
+      console.log(`Captured 4-column grid screenshot: ${outGrid}`);
     }
 
     if (vp.name === '390px-mobile') {

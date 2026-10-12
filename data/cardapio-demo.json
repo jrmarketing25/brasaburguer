@@ -288,6 +288,73 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "brasa-onion",
+      "name": "Brasa Onion",
+      "category": "hamburgueres",
+      "priceCents": 3590,
+      "image": "/images/products/brasa-onion.webp",
+      "description": "Blend 180g, queijo cheddar derretido, onion rings super crocantes, alface e molho especial.",
+      "badge": "Crocante",
+      "ingredients": [
+        "Blend artesanal 180g",
+        "Queijo cheddar",
+        "Onion rings crocantes",
+        "Alface fresca",
+        "Molho especial da casa"
+      ],
+      "customizationGroups": []
+    },
+    {
+      "slug": "brasa-cheese-duplo",
+      "name": "Brasa Cheese Duplo",
+      "category": "hamburgueres",
+      "priceCents": 4290,
+      "image": "/images/products/brasa-cheese-duplo.webp",
+      "description": "Dois blends de 180g na brasa viva, duplo queijo cheddar derretido, tiras de bacon crocante e molho especial.",
+      "badge": "Duplo",
+      "ingredients": [
+        "2x Blends artesanais 180g",
+        "Duplo queijo cheddar",
+        "Bacon crocante",
+        "Molho da casa"
+      ],
+      "customizationGroups": []
+    },
+    {
+      "slug": "brasa-fire",
+      "name": "Brasa Fire",
+      "category": "hamburgueres",
+      "priceCents": 3690,
+      "image": "/images/products/brasa-fire.webp",
+      "description": "Blend artesanal 180g, queijo cheddar, bacon crocante, cebola caramelizada e molho barbecue defumado.",
+      "badge": "Novo",
+      "ingredients": [
+        "Blend artesanal 180g",
+        "Queijo cheddar",
+        "Bacon crocante",
+        "Cebola caramelizada",
+        "Molho barbecue defumado"
+      ],
+      "customizationGroups": []
+    },
+    {
+      "slug": "brasa-veggie",
+      "name": "Brasa Veggie",
+      "category": "hamburgueres",
+      "priceCents": 3290,
+      "image": "/images/products/brasa-veggie.webp",
+      "description": "Burger 100% vegetal artesanal, queijo derretido, alface americana fresca, tomate selecionado e molho especial.",
+      "badge": "Veggie",
+      "ingredients": [
+        "Burger vegetal 160g",
+        "Queijo prato derretido",
+        "Alface fresca",
+        "Tomate fatiado",
+        "Molho da casa"
+      ],
+      "customizationGroups": []
     }
   ],
   "addOnGroups": [

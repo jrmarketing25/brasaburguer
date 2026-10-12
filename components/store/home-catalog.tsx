@@ -32,25 +32,19 @@ export function HomeCatalog({ menuData }: HomeCatalogProps) {
         {/* 2. ÁREA PRINCIPAL: Hero no topo + Catálogo & Carrinho    */}
         {/* ========================================================= */}
         <div className="flex-1 min-w-0 space-y-4 sm:space-y-6">
-          {/* Hero Gastronômico (Ampla largura no Desktop, acima do catálogo e do carrinho) */}
+          {/* Hero Gastronômico (Ampla largura no Desktop) */}
           <HeroBanner />
 
-          {/* Linha de Conteúdo: Catálogo à esquerda e Carrinho Lateral à direita */}
-          <div className="flex gap-6 lg:gap-7 xl:gap-8 items-start">
-            <main className="flex-1 min-w-0">
-              <ProductList
-                categories={menuData.categories}
-                products={menuData.products}
-                selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
-              />
-            </main>
-
-            {/* 3. SIDEBAR DIREITA: Carrinho Lateral alinhado abaixo do Hero (Mockup Exato) */}
-            <div className="hidden xl:block shrink-0">
-              <DesktopCartSidebar />
-            </div>
-          </div>
+          {/* Catálogo de Produtos com Carrinho acoplado ao topo e grid 4 colunas abaixo */}
+          <main className="w-full">
+            <ProductList
+              categories={menuData.categories}
+              products={menuData.products}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+              cartSidebar={<DesktopCartSidebar />}
+            />
+          </main>
         </div>
       </div>
     </div>

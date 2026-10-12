@@ -20,6 +20,7 @@ interface ProductListProps {
   products: Product[];
   selectedCategory?: string;
   onSelectCategory?: (categorySlug: string) => void;
+  cartSidebar?: React.ReactNode;
 }
 
 export function ProductList({
@@ -27,6 +28,7 @@ export function ProductList({
   products,
   selectedCategory: controlledCategory,
   onSelectCategory: setControlledCategory,
+  cartSidebar,
 }: ProductListProps) {
   const [internalCategory, setInternalCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -77,55 +79,67 @@ export function ProductList({
 
   return (
     <>
-      <section id="cardapio" className="w-full scroll-mt-20 space-y-5 pt-2 pb-8">
-        {/* Barra de Busca e Filtro de Categorias */}
-        <div className="space-y-3">
-          {/* Campo de Busca Local Integrado */}
-          <div className="relative w-full">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
-            <input
-              id="search-input"
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar hambúrguer, combo ou acompanhamento..."
-              className="w-full h-11 rounded-2xl border border-brasa-border bg-brasa-surface pl-10 pr-10 text-xs sm:text-sm text-brasa-cream placeholder:text-zinc-500 focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange focus:outline-none transition-all"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-brasa-cream p-0.5"
-                aria-label="Limpar busca"
-              >
-                <X className="h-4 w-4" />
-              </button>
+      <section id="cardapio" className="w-full scroll-mt-20 space-y-6 pt-2 pb-8">
+        {/* Linha Superior: Busca, Filtros e Combos à esquerda + Carrinho Lateral à direita */}
+        <div className="flex gap-6 lg:gap-7 xl:gap-8 items-start">
+          <div className="flex-1 min-w-0 space-y-4">
+            {/* Barra de Busca e Filtro de Categorias */}
+            <div className="space-y-3">
+              {/* Campo de Busca Local Integrado */}
+              <div className="relative w-full">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
+                <input
+                  id="search-input"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar hambúrguer, combo ou acompanhamento..."
+                  className="w-full h-11 rounded-2xl border border-brasa-border bg-brasa-surface pl-10 pr-10 text-xs sm:text-sm text-brasa-cream placeholder:text-zinc-500 focus:border-brasa-orange focus:ring-1 focus:ring-brasa-orange focus:outline-none transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-brasa-cream p-0.5"
+                    aria-label="Limpar busca"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+
+              {/* Filtro horizontal de Categorias (Visível no Mobile e como Pills no Desktop) */}
+              <CategoryFilter
+                categories={[
+                  { slug: "all", name: "Todos", sort: 0 },
+                  ...categories,
+                ]}
+                selectedCategory={currentCategory}
+                onSelectCategory={handleCategoryChange}
+              />
+            </div>
+
+            {/* Seção de Combos em Destaque (quando não houver busca ativa e em categoria aplicável) */}
+            {!searchQuery && (currentCategory === "all" || currentCategory === "combos" || currentCategory === "hamburgueres") && (
+              <div id="combos" className="scroll-mt-20 pt-1">
+                <ComboCarousel
+                  combos={combos}
+                  onSelectCombo={(combo) => setActiveDrawerProduct(combo)}
+                />
+              </div>
             )}
           </div>
 
-          {/* Filtro horizontal de Categorias (Visível no Mobile e como Pills no Desktop) */}
-          <CategoryFilter
-            categories={[
-              { slug: "all", name: "Todos", sort: 0 },
-              ...categories,
-            ]}
-            selectedCategory={currentCategory}
-            onSelectCategory={handleCategoryChange}
-          />
+          {/* Carrinho Lateral: Alinhado no topo da seção ao lado dos combos */}
+          {cartSidebar && (
+            <div className="hidden xl:block shrink-0">
+              {cartSidebar}
+            </div>
+          )}
         </div>
 
-        {/* Seção de Combos em Destaque (quando não houver busca ativa e em categoria aplicável) */}
-        {!searchQuery && (currentCategory === "all" || currentCategory === "combos" || currentCategory === "hamburgueres") && (
-          <div id="combos" className="scroll-mt-20 pt-1">
-            <ComboCarousel
-              combos={combos}
-              onSelectCombo={(combo) => setActiveDrawerProduct(combo)}
-            />
-          </div>
-        )}
-
-        {/* Seção Principal de Produtos */}
-        <div className="space-y-4 pt-2">
+        {/* Seção Principal de Produtos: Ocupa 4 COLUNAS na largura total abaixo do carrinho */}
+        <div className="space-y-4 pt-3">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 border-b border-brasa-border/40 pb-3">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -154,9 +168,9 @@ export function ProductList({
             </span>
           </div>
 
-          {/* Grid Responsivo de Produtos: Mobile em lista horizontal (1 col), Desktop em grid equilibrado (2-3 cols) */}
+          {/* Grid de 4 Colunas no Desktop (evita qualquer espaço sobrando na direita) */}
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-3 sm:gap-4 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3.5 sm:gap-4 w-full">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.slug}
