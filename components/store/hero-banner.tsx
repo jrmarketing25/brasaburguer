@@ -6,7 +6,19 @@ import { ArrowRight, Flame, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { defaultStoreConfig } from "@/lib/config/store.config";
 
-export function HeroBanner() {
+interface HeroBannerProps {
+  storeName?: string;
+  slogan?: string;
+  logoUrl?: string;
+  bannerUrl?: string;
+}
+
+export function HeroBanner({
+  storeName = defaultStoreConfig.name,
+  slogan = defaultStoreConfig.slogan,
+  logoUrl = defaultStoreConfig.logoUrl,
+  bannerUrl,
+}: HeroBannerProps) {
   const handleScrollToMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     const menuSection = document.getElementById("cardapio");
@@ -120,8 +132,8 @@ export function HeroBanner() {
           <div className="flex items-center gap-3">
             <div className="relative h-8 w-24 xl:h-9 xl:w-28">
               <Image
-                src={defaultStoreConfig.logoUrl}
-                alt={defaultStoreConfig.name}
+                src={logoUrl}
+                alt={storeName}
                 fill
                 priority
                 className="object-contain object-left"

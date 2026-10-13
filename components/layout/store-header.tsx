@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ShoppingCart, Search, UtensilsCrossed, Sparkles } from "lucide-react";
 import { defaultStoreConfig } from "@/lib/config/store.config";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { useStoreConfigStore } from "@/lib/store/useStoreConfigStore";
 
 interface StoreHeaderProps {
   storeName?: string;
@@ -15,10 +16,15 @@ interface StoreHeaderProps {
 }
 
 export function StoreHeader({
-  storeName = defaultStoreConfig.name,
-  logoUrl = defaultStoreConfig.logoUrl,
-  isOpen = defaultStoreConfig.isOpen,
+  storeName: propStoreName,
+  logoUrl: propLogoUrl,
+  isOpen: propIsOpen,
 }: StoreHeaderProps) {
+  const storeConfig = useStoreConfigStore((state) => state.config);
+  const storeName = propStoreName || storeConfig.name;
+  const logoUrl = propLogoUrl || storeConfig.logoUrl;
+  const isOpen = propIsOpen !== undefined ? propIsOpen : storeConfig.isOpen;
+
   const pathname = usePathname();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);

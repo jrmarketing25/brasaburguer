@@ -14,8 +14,11 @@ import {
   CheckCircle2,
   AlertCircle,
   ExternalLink,
+  Upload,
+  Image as ImageIcon,
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { uploadStorageFile } from "@/lib/supabase/storage";
 
 interface StoreData {
   name: string;
@@ -75,6 +78,11 @@ export default function AdminConfiguracoesPage() {
   const [description, setDescription] = useState(
     "Hambúrgueres artesanais na brasa viva, ingredientes selecionados e molhos especiais."
   );
+  const [logoUrl, setLogoUrl] = useState("/images/brand/logo-brasa-vetorial.svg");
+  const [faviconUrl, setFaviconUrl] = useState("/images/brand/favicon.svg");
+  const [bannerUrl, setBannerUrl] = useState("/images/banner/hero-churrasqueira.webp");
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [isUploadingBanner, setIsUploadingBanner] = useState(false);
   const [street, setStreet] = useState("Av. Principal dos Burgers");
   const [number, setNumber] = useState("1234");
   const [neighborhood, setNeighborhood] = useState("Centro Gastronômico");
@@ -128,6 +136,9 @@ export default function AdminConfiguracoesPage() {
         if (setts) {
           setSlogan(setts.slogan || "");
           setDescription(setts.description || "");
+          if (setts.logo_url) setLogoUrl(setts.logo_url);
+          if (setts.favicon_url) setFaviconUrl(setts.favicon_url);
+          if (setts.banner_url) setBannerUrl(setts.banner_url);
           setStreet(setts.address_street || "");
           setNumber(setts.address_number || "");
           setNeighborhood(setts.address_neighborhood || "");
@@ -204,6 +215,9 @@ export default function AdminConfiguracoesPage() {
         .update({
           slogan: slogan.trim() || null,
           description: description.trim() || null,
+          logo_url: logoUrl.trim() || null,
+          favicon_url: faviconUrl.trim() || null,
+          banner_url: bannerUrl.trim() || null,
           address_street: street.trim() || null,
           address_number: number.trim() || null,
           address_neighborhood: neighborhood.trim() || null,
@@ -316,6 +330,122 @@ export default function AdminConfiguracoesPage() {
               <label htmlFor="chk-store-open" className="text-zinc-200 font-medium cursor-pointer">
                 Loja aberta e aceitando pedidos (Status Global da Loja)
               </label>
+            </div>
+          </div>
+
+          {/* Seção 2: Identidade Visual & Branding White Label */}
+          <div className="rounded-xl border border-zinc-800 bg-[#161616] p-6 space-y-4">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 flex items-center gap-2 border-b border-zinc-800/80 pb-3">
+              <ImageIcon className="w-4 h-4 text-[#FF6A00]" />
+              <span>Identidade Visual & Fotografias (White Label)</span>
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Logo da Loja */}
+              <div className="space-y-3">
+                <label className="block text-zinc-300 font-medium">Logotipo da Marca</label>
+                <div className="flex items-center gap-4">
+                  <div className="relative h-16 w-28 rounded-lg border border-zinc-800 bg-[#0C0C0C] flex items-center justify-center overflow-hidden p-2">
+                    <Image
+                      src={logoUrl || "/images/brand/logo-brasa-vetorial.svg"}
+                      alt="Logo da Loja"
+                      fill
+                      className="object-contain p-1"
+                    />
+                  </div>
+
+                  <label className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 cursor-pointer font-medium transition text-xs">
+                    {isUploadingLogo ? (
+                      <Loader2 className="w-4 h-4 animate-spin text-[#FF6A00]" />
+                    ) : (
+                      <Upload className="w-4 h-4 text-[#FF6A00]" />
+                    )}
+                    <span>{isUploadingLogo ? "Enviando..." : "Alterar Logo"}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      disabled={isUploadingLogo}
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          setIsUploadingLogo(true);
+                          const fileExt = file.name.split(".").pop();
+                          const fileName = `${STORE_ID}/logo_${Date.now()}.${fileExt}`;
+                          const { url, error } = await uploadStorageFile("logos", fileName, file);
+                          if (error) throw error;
+                          if (url) setLogoUrl(url);
+                        } catch (err: any) {
+                          alert(`Erro ao fazer upload da logo: ${err.message}`);
+                        } finally {
+                          setIsUploadingLogo(false);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  value={logoUrl}
+                  onChange={(e) => setLogoUrl(e.target.value)}
+                  placeholder="URL pública da Logo"
+                  className="w-full px-3 py-1.5 rounded-lg bg-[#0C0C0C] border border-zinc-800 text-zinc-300 text-[11px] focus:outline-none focus:border-[#FF6A00]"
+                />
+              </div>
+
+              {/* Banner de Destaque */}
+              <div className="space-y-3">
+                <label className="block text-zinc-300 font-medium">Banner de Destaque (Hero)</label>
+                <div className="flex items-center gap-4">
+                  <div className="relative h-16 w-32 rounded-lg border border-zinc-800 bg-[#0C0C0C] flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={bannerUrl || "/images/banner/hero-churrasqueira.webp"}
+                      alt="Banner de Destaque"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <label className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 cursor-pointer font-medium transition text-xs">
+                    {isUploadingBanner ? (
+                      <Loader2 className="w-4 h-4 animate-spin text-[#FF6A00]" />
+                    ) : (
+                      <Upload className="w-4 h-4 text-[#FF6A00]" />
+                    )}
+                    <span>{isUploadingBanner ? "Enviando..." : "Alterar Banner"}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      disabled={isUploadingBanner}
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          setIsUploadingBanner(true);
+                          const fileExt = file.name.split(".").pop();
+                          const fileName = `${STORE_ID}/banner_${Date.now()}.${fileExt}`;
+                          const { url, error } = await uploadStorageFile("banners", fileName, file);
+                          if (error) throw error;
+                          if (url) setBannerUrl(url);
+                        } catch (err: any) {
+                          alert(`Erro ao fazer upload do banner: ${err.message}`);
+                        } finally {
+                          setIsUploadingBanner(false);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  value={bannerUrl}
+                  onChange={(e) => setBannerUrl(e.target.value)}
+                  placeholder="URL pública do Banner"
+                  className="w-full px-3 py-1.5 rounded-lg bg-[#0C0C0C] border border-zinc-800 text-zinc-300 text-[11px] focus:outline-none focus:border-[#FF6A00]"
+                />
+              </div>
             </div>
           </div>
 

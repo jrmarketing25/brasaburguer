@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { formatCurrency } from "@/lib/utils";
 import { defaultStoreConfig } from "@/lib/config/store.config";
+import { useStoreConfigStore } from "@/lib/store/useStoreConfigStore";
 import { WhatsAppOfficialIcon } from "@/components/store/menu-icons";
 import {
   Trash2,
@@ -48,13 +49,15 @@ export function DesktopCartSidebar() {
   const totalAddOnsCents = mounted ? getTotalAddOnsCents() : 0;
   const itemsSubtotalCents = subtotalProductsCents + totalAddOnsCents;
 
+  const storeConfig = useStoreConfigStore((state) => state.config);
+
   const isFreeDelivery =
-    Boolean(defaultStoreConfig.delivery.freeDeliveryThresholdCents) &&
-    itemsSubtotalCents >= (defaultStoreConfig.delivery.freeDeliveryThresholdCents || 0);
+    Boolean(storeConfig.delivery.freeDeliveryThresholdCents) &&
+    itemsSubtotalCents >= (storeConfig.delivery.freeDeliveryThresholdCents || 0);
 
   const deliveryFeeCents = isFreeDelivery
     ? 0
-    : defaultStoreConfig.delivery.feeCents;
+    : storeConfig.delivery.feeCents;
 
   const totalCents = itemsSubtotalCents + deliveryFeeCents;
 

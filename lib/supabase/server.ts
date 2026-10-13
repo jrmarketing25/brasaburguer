@@ -19,3 +19,21 @@ export function getSupabaseServerClient(): SupabaseClient | null {
   });
 }
 
+/**
+ * Cliente Supabase com privilégios de serviço (service_role) para operações
+ * transacionais internas e estritamente validadas pelo servidor (ex: criação de pedidos).
+ */
+export function getSupabaseAdminServerClient(): SupabaseClient | null {
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) {
+    return getSupabaseServerClient();
+  }
+
+  return createClient(supabaseUrl, serviceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
+

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { defaultStoreConfig } from "@/lib/config/store.config";
+import { useStoreConfigStore } from "@/lib/store/useStoreConfigStore";
 import {
   CartItem,
   CustomerInfo,
@@ -87,13 +88,15 @@ export default function CartPage() {
 
   const subtotalProductsCents = mounted ? getSubtotalProductsCents() : 0;
   const totalAddOnsCents = mounted ? getTotalAddOnsCents() : 0;
+  const storeConfig = useStoreConfigStore((state) => state.config);
   const itemsSubtotalCents = subtotalProductsCents + totalAddOnsCents;
   const itemsCount = mounted ? getTotalItemsCount() : 0;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Auditoria do WhatsApp de destino configurado na loja
   const whatsAppAudit = useMemo(() => {
-    return validateStoreWhatsApp(defaultStoreConfig.whatsappNumber);
-  }, []);
+    return validateStoreWhatsApp(storeConfig.whatsappNumber || defaultStoreConfig.whatsappNumber);
+  }, [storeConfig.whatsappNumber]);
 
   // Cálculo da Taxa de Entrega
   const deliveryFeeCents = useMemo(() => {
@@ -103,14 +106,14 @@ export default function CartPage() {
 
     // Regra de Frete Grátis acima do limite
     if (
-      defaultStoreConfig.delivery.freeDeliveryThresholdCents &&
-      itemsSubtotalCents >= defaultStoreConfig.delivery.freeDeliveryThresholdCents
+      storeConfig.delivery.freeDeliveryThresholdCents &&
+      itemsSubtotalCents >= storeConfig.delivery.freeDeliveryThresholdCents
     ) {
       return 0;
     }
 
     // Busca taxa do bairro
-    const neighborhoodFees = defaultStoreConfig.delivery.neighborhoodFees || [];
+    const neighborhoodFees = storeConfig.delivery.neighborhoodFees || [];
     const matchedNeighborhood = neighborhoodFees.find(
       (n) => n.name.toLowerCase() === address.neighborhood.toLowerCase()
     );
@@ -119,8 +122,8 @@ export default function CartPage() {
       return matchedNeighborhood.feeCents;
     }
 
-    return defaultStoreConfig.delivery.feeCents;
-  }, [fulfillmentType, address.neighborhood, itemsSubtotalCents]);
+    return storeConfig.delivery.feeCents;
+  }, [fulfillmentType, address.neighborhood, itemsSubtotalCents, storeConfig.delivery]);
 
   const totalCents = itemsSubtotalCents + deliveryFeeCents;
 
@@ -172,7 +175,7 @@ export default function CartPage() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleFinishOrder = () => {
+  const handleFinishOrder = async () => {
     if (!validateForm()) return;
 
     // Se WhatsApp da loja não estiver configurado, bloqueia
@@ -181,12 +184,47 @@ export default function CartPage() {
       return;
     }
 
-    // Gera Identificador de Referência Local
-    const orderRef = `#BB-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    setIsSubmitting(true);
+    let orderRef = `#BB-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
 
+    try {
+      // 1. Chamar endpoint do servidor para validação transacional e persistência
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: {
+            name: customer.name.trim(),
+            phone: customer.phone,
+          },
+          fulfillmentType,
+          deliveryAddress: fulfillmentType === "delivery" ? address : undefined,
+          payment,
+          items,
+          notes: "",
+        }),
+      });
+
+      const resData = await res.json();
+      if (!res.ok) {
+        alert(resData.error || "Erro ao processar o pedido.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (resData.orderNumber) {
+        orderRef = resData.orderNumber;
+      }
+    } catch (err: any) {
+      console.warn("Aviso ao sincronizar pedido com servidor:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+
+    // 2. Formatar e abrir WhatsApp com o número oficial do pedido
     const message = formatWhatsAppOrderMessage({
       orderRef,
-      storeName: defaultStoreConfig.name,
+      storeName: storeConfig.name || defaultStoreConfig.name,
       customer: {
         name: customer.name.trim(),
         phone: customer.phone,
@@ -200,10 +238,8 @@ export default function CartPage() {
       totalCents,
     });
 
-    const whatsappUrl = generateWhatsAppOrderUrl(
-      defaultStoreConfig.whatsappNumber,
-      message
-    );
+    const targetWhatsapp = storeConfig.whatsappNumber || defaultStoreConfig.whatsappNumber;
+    const whatsappUrl = generateWhatsAppOrderUrl(targetWhatsapp, message);
 
     setOrderSentUrl(whatsappUrl);
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");

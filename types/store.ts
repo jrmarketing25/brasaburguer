@@ -130,6 +130,9 @@ export interface MenuData {
     deliveryFeeCents: number;
     minimumOrderCents: number;
     isOpen: boolean;
+    logoUrl?: string;
+    faviconUrl?: string;
+    bannerUrl?: string;
   };
   categories: Category[];
   products: Product[];

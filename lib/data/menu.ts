@@ -30,3 +30,8 @@ export async function getAddOnGroups(): Promise<AddOnGroup[]> {
   const repository = getMenuRepository();
   return repository.getAddOnGroups();
 }
+
+export async function getStoreConfig(): Promise<import("@/types/store").StoreConfig> {
+  const repository = getMenuRepository();
+  return repository.getStoreConfig();
+}
