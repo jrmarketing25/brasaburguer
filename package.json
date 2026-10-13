@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "supabase db reset"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
@@ -29,6 +33,7 @@
     "postcss": "^8.5.2",
     "puppeteer-core": "^25.13.0",
     "sharp": "^0.35.5",
+    "supabase": "^2.120.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
   }

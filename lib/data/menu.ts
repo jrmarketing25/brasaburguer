@@ -1,34 +1,32 @@
-import demoMenu from "@/data/cardapio-demo.json";
+import { getMenuRepository } from "@/lib/repositories";
 import { MenuData, Product, Category, AddOnGroup } from "@/types/store";
 
 /**
  * Camada de acesso a dados desacoplada.
- * Atualmente opera em modo de demonstração lendo data/cardapio-demo.json.
- * Preparada para transição transparente para o Supabase sem alterar componentes.
+ * Utiliza o Repositório configurado (DemoRepository ou SupabaseRepository via NEXT_PUBLIC_DATA_SOURCE).
+ * Preserva compatibilidade total com todos os componentes da Home, Desktop, Drawer e Checkout.
  */
 export async function getMenuData(): Promise<MenuData> {
-  // Simula latência de rede mínima em desenvolvimento ou lê diretamente do JSON tipado
-  return demoMenu as unknown as MenuData;
+  const repository = getMenuRepository();
+  return repository.getMenuData();
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const data = await getMenuData();
-  return [...data.categories].sort((a, b) => a.sort - b.sort);
+  const repository = getMenuRepository();
+  return repository.getCategories();
 }
 
 export async function getProductsByCategory(categorySlug?: string): Promise<Product[]> {
-  const data = await getMenuData();
-  if (!categorySlug) return data.products;
-  return data.products.filter((p) => p.category === categorySlug);
+  const repository = getMenuRepository();
+  return repository.getProductsByCategory(categorySlug);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
-  const data = await getMenuData();
-  return data.products.find((p) => p.slug === slug);
+  const repository = getMenuRepository();
+  return repository.getProductBySlug(slug);
 }
 
 export async function getAddOnGroups(): Promise<AddOnGroup[]> {
-  const data = await getMenuData();
-  return data.addOnGroups;
+  const repository = getMenuRepository();
+  return repository.getAddOnGroups();
 }
-

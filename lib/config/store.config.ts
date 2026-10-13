@@ -5,8 +5,8 @@ import { StoreConfig } from "@/types/store";
  * Centraliza a identidade, dados de contato, entrega e modalidades de pagamento da BRASA BURGERS.
  */
 export const defaultStoreConfig: StoreConfig = {
-  id: "brasa-burgers",
-  name: "BRASA BURGERS",
+  id: process.env.NEXT_PUBLIC_STORE_ID || "a0000000-0000-0000-0000-000000000001",
+  name: process.env.NEXT_PUBLIC_STORE_NAME || "BRASA BURGERS",
   slug: "brasa-burgers",
   slogan: "Sabor que une pessoas.",
   description:
