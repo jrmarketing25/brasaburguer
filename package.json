@@ -10,7 +10,8 @@
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:status": "supabase status",
-    "supabase:reset": "supabase db reset"
+    "supabase:reset": "supabase db reset",
+    "create-admin": "node scripts/create-admin.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",

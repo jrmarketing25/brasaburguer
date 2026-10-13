@@ -2,6 +2,8 @@ import React from "react";
 import { getMenuData } from "@/lib/data/menu";
 import { HomeCatalog } from "@/components/store/home-catalog";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const menuData = await getMenuData();
 
