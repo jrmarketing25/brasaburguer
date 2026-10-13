@@ -1,16 +1,20 @@
 /**
- * Script utilitário para provisionamento seguro do primeiro administrador no Supabase Local.
+ * Script seguro para provisionamento do primeiro administrador no Supabase Local.
+ * Não utiliza senhas estáticas hardcoded no código-fonte.
+ *
  * Uso:
+ *   ADMIN_PASSWORD="sua-senha-segura" node scripts/create-admin.js [email]
+ *   ou
  *   node scripts/create-admin.js [email] [senha]
- * Exemplo:
- *   node scripts/create-admin.js admin@brasaburgers.com.br Brasa@2026#Admin
+ *
+ * Caso nenhuma senha seja fornecida, uma senha aleatória criptograficamente segura será gerada.
  */
 
 const { createClient } = require("@supabase/supabase-js");
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 
-// Carregar variáveis de .env.local
 const envPath = path.resolve(__dirname, "../.env.local");
 let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321";
 let serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -35,14 +39,17 @@ if (!serviceRoleKey) {
   process.exit(1);
 }
 
-const email = process.argv[2] || "admin@brasaburgers.com.br";
-const password = process.argv[3] || "BrasaAdmin@2026!";
+const email = process.argv[2] || process.env.ADMIN_EMAIL || "admin@brasaburgers.com.br";
+const password =
+  process.argv[3] ||
+  process.env.ADMIN_PASSWORD ||
+  crypto.randomBytes(12).toString("base64") + "!A1";
 
 async function provisionAdmin() {
   console.log("=== Provisionamento de Administrador (Supabase Local) ===");
-  console.log(`URL: ${supabaseUrl}`);
+  console.log(`URL do Supabase: ${supabaseUrl}`);
   console.log(`Loja ID: ${storeId}`);
-  console.log(`Email: ${email}`);
+  console.log(`Email Alvo: ${email}`);
 
   const supabase = createClient(supabaseUrl, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
@@ -87,7 +94,7 @@ async function provisionAdmin() {
 
   // 2. Vincular como 'owner' na tabela store_members
   console.log("Vinculando membro na tabela store_members...");
-  const { data: memberData, error: memberError } = await supabase
+  const { error: memberError } = await supabase
     .from("store_members")
     .upsert(
       {
@@ -96,8 +103,7 @@ async function provisionAdmin() {
         role: "owner",
       },
       { onConflict: "store_id,user_id" }
-    )
-    .select();
+    );
 
   if (memberError) {
     console.error("Erro ao vincular membro:", memberError.message);
@@ -106,10 +112,10 @@ async function provisionAdmin() {
 
   console.log("Vínculo administrativo estabelecido com sucesso!");
   console.log("--------------------------------------------------");
-  console.log(`Credenciais ativas:`);
   console.log(`Email: ${email}`);
-  console.log(`Senha: ${password}`);
+  console.log(`Senha gerada/definida: ${password}`);
   console.log(`Papel: owner (Loja BRASA BURGERS)`);
+  console.log("ATENÇÃO: Armazene esta credencial em um cofre seguro.");
   console.log("--------------------------------------------------");
 }
 
@@ -117,4 +123,3 @@ provisionAdmin().catch((err) => {
   console.error("Falha inesperada:", err);
   process.exit(1);
 });
-

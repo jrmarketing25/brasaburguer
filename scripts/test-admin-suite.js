@@ -13,12 +13,30 @@
 
 const { createClient } = require("@supabase/supabase-js");
 
-const SUPABASE_URL = "http://127.0.0.1:54321";
-const ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0";
-const STORE_ID = "a0000000-0000-0000-0000-000000000001";
-const ADMIN_EMAIL = "admin@brasaburgers.com.br";
-const ADMIN_PASS = "BrasaAdmin@2026!";
+const fs = require("fs");
+const path = require("path");
+
+const envPath = path.resolve(__dirname, "../.env.local");
+let SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321";
+let ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+let STORE_ID = process.env.NEXT_PUBLIC_STORE_ID || "a0000000-0000-0000-0000-000000000001";
+
+if (fs.existsSync(envPath)) {
+  const content = fs.readFileSync(envPath, "utf-8");
+  content.split("\n").forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith("#")) {
+      const [key, ...vals] = trimmed.split("=");
+      const val = vals.join("=").replace(/^["']|["']$/g, "");
+      if (key === "NEXT_PUBLIC_SUPABASE_URL") SUPABASE_URL = val;
+      if (key === "NEXT_PUBLIC_SUPABASE_ANON_KEY") ANON_KEY = val;
+      if (key === "NEXT_PUBLIC_STORE_ID") STORE_ID = val;
+    }
+  });
+}
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@brasaburgers.com.br";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || process.argv[2] || "BrasaAdmin@2026!";
 
 async function runTests() {
   console.log("==================================================================");
